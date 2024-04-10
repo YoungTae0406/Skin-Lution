@@ -1,0 +1,28 @@
+# nginx, fastapi
+version: '3'
+
+services:
+  nginx-1:
+    image: nginx
+    ports: 
+      - 80:${NGINX_PORT}
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - web_bridge
+
+  fastAPI:
+    build: 
+      context: ../fastapi
+      dockerfile: Dockerfile
+      # args:
+    ports:
+      - "8888:8888"
+    networks:
+      - web_bridge
+
+
+networks:
+  web_bridge:
+    
+  
