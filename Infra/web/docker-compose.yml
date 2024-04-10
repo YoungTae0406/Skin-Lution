@@ -21,7 +21,6 @@ services:
     networks:
       - web_bridge
 
-
 networks:
   web_bridge:
     
