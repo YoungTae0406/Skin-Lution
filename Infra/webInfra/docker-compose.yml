@@ -12,10 +12,7 @@ services:
       - web_bridge
 
   fastAPI:
-    build: 
-      context: ../fastapi
-      dockerfile: Dockerfile
-      # args:
+    image: demisto/fastapi
     ports:
       - "8888:8888"
     networks:
