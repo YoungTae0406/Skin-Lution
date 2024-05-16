@@ -5,14 +5,17 @@ services:
   nginx-1:
     image: nginx
     ports: 
-      - 80:${NGINX_PORT}
+      - 80:${NGINX_PORT} # 80:8080
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     networks:
       - web_bridge
 
   fastAPI:
-    image: demisto/fastapi
+    build: 
+      context: ../web/fastapi
+      dockerfile: Dockerfile
+      # args:
     ports:
       - "8888:8888"
     networks:
