@@ -11,7 +11,8 @@ services:
   #   networks:
   #     - web_bridge
 
-  fastapi:
+  fastapi-1:
+    container_name: fastapi-1
     build: 
       context: ../web/fastapi
       dockerfile: Dockerfile
