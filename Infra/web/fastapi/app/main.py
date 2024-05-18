@@ -32,7 +32,6 @@ def createUserTables():
     conn.close()
 
 
-
 # docs에서 확인가능
 @app.get("/")
 def read_root():
