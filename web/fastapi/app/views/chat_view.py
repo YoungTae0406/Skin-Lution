@@ -1,7 +1,7 @@
 from fastapi import APIRouter
-from app.controllers import consultation
+from controllers import chat
 
 router = APIRouter()
 
-# /consultation 경로에 consultation 컨트롤러의 라우터를 포함
-router.include_router(consultation.router, prefix="/chat")
+# /chat 경로에 chat 컨트롤러의 라우터를 포함
+router.include_router(chat.router, prefix="/chat")
