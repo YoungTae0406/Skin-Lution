@@ -14,7 +14,7 @@ async function sendMessage(userInput) {
 document.getElementById("sendButton").addEventListener("click", async () => {
     const userInput = document.getElementById("userInput").value;
     const botResponse = await sendMessage(userInput);
-    const chatBox = document.getElementById("chatBox");
+    const chatBox = document.getElementById("chatBox"); 
     chatBox.innerHTML += `<div><strong>You:</strong> ${userInput}</div>`;
     chatBox.innerHTML += `<div><strong>Bot:</strong> ${botResponse}</div>`;
     document.getElementById("userInput").value = '';
