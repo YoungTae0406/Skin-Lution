@@ -4,7 +4,7 @@ from pydantic import BaseModel
 # 데이터 직렬화 및 역직렬화의 기능도 존재하고, API 문서를 자동으로 생성해줌.
 
 class ChatRequest(BaseModel):
-    user_id: int # 고민해봐야됨.
+    #user_id: int # 고민해봐야됨.
     user_input: str
 
 class ChatResponse(BaseModel):
