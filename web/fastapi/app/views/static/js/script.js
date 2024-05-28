@@ -16,7 +16,7 @@ async function handleSend() {
     
     // ChatGPT API 호출
     try {
-      const response = await fetch('http://127.0.0.1:5000/run-python', {
+      const response = await fetch('http://127.0.0.1:8888/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -59,8 +59,6 @@ function changeSendIcon() {
 }
 
 document.getElementById('input').addEventListener('input', changeSendIcon);
-
-
 
 script.js
 script.js
