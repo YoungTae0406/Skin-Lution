@@ -17,7 +17,6 @@ from langchain import hub
 from langchain_core.runnables import RunnablePassthrough, RunnableParallel, RunnableBranch
 from langchain_core.output_parsers import StrOutputParser
 from langchain.agents.agent_types import AgentType
-from langchain_experimental.agents.agent_toolkits import create_csv_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
@@ -34,19 +33,18 @@ def init_model():
         #callbacks=[StreamingStdOutCallbackHandler()], #스트리밍으로 답변 받기
     )
 
-    loader = DirectoryLoader("/data", glob="*.pdf")
+    loader = DirectoryLoader("/data", glob="**/*.pdf")
     pdf_docs = loader.load()
-
-    '''
+    
     for i in range(len(pdf_docs)):
         print(pdf_docs[i].metadata)
-    '''
-    loader = DirectoryLoader("/data", glob="*.txt")
+    
+    loader = DirectoryLoader("/data", glob="**/*.txt")
     txt_docs = loader.load()
-    '''
+    
     for i in range(len(txt_docs)):
         print(txt_docs[i].metadata)
-    '''
+    
     loader = CSVLoader(file_path='/data/cosmetics/화장품데이터.csv', encoding='utf-8')
     csv_docs = loader.load()
 
@@ -130,7 +128,7 @@ def perform_retrieval(user_message):
     return conversational_retrieval_chain
 
 # model init 하기
-init_model()
+#init_model()
 
 class ChatGPTModel:
     def __init__(self):
