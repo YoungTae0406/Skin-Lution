@@ -16,7 +16,7 @@ async function handleSend() {
     
     // ChatGPT API 호출
     try {
-      const response = await fetch('http://127.0.0.1:8888/chat', {
+      const response = await fetch('http://127.0.0.1:8888/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
