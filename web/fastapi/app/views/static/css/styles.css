@@ -1,119 +1,160 @@
 /* styles.css */
- body {
-font-family: Arial, sans-serif;
-background-color: #f0f2f5;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-margin: 0;
+body {
+  font-family: sans-serif;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 15px;
+  margin: 0;
 }
 
 .chat-container {
-display: flex;
-flex-direction: column;
-height: 90vh;
-width: 90vw;
-max-width: 600px;
-background-color: #ffffff;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-border-radius: 10px;
-overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  width: 90vw;
+  max-width: 600px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 로고와 텍스트를 양 옆으로 분산 정렬 */
-    padding: 20px;
-    color: white;
-    color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 로고와 텍스트를 양 옆으로 분산 정렬 */
+  padding: 20px;
+  color: white;
+  color: black;
 }
 
 .logo {
-    margin: auto;
-    height: 50px;
+  margin: auto;
+  height: 50px;
 }
 
 h1 {
-    padding-right: 250px; /* 로고를 오른쪽으로 이동하여 가운데 정렬 */
-    font-size: 20px;
-    margin: 0; /* 텍스트의 기본 마진 제거 */
+  padding-right: 250px; /* 로고를 오른쪽으로 이동하여 가운데 정렬 */
+  font-size: 20px;
+  margin: 0; /* 텍스트의 기본 마진 제거 */
 }
 
 .messages {
-flex: 1;
-padding: 20px;
-overflow-y: auto;
-background-color: #f9f9f9;
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
 }
 
 .message {
-padding: 10px 15px;
-margin: 10px 0;
-border-radius: 20px;
-max-width: 70%;
-word-wrap: break-word;
+  padding: 10px 15px;
+  padding-left: 20px;
+  margin: 10px 0;
+  border-radius: 20px;
+  max-width: 70%;
+  word-wrap: break-word;
 }
 
 .message.user {
-align-self: flex-end;
-background-color: #a0b6dc;
-margin-left: auto; /* 사용자 메시지를 오른쪽으로 정렬 */
-
+  align-self: flex-end;
+  /* color: #9F769D; */
+  color: black;
+  /* background-color: rgb(29, 217, 176); */
+  background-color: #aaddcd;
+  margin-left: auto; /* 사용자 메시지를 오른쪽으로 정렬 */
+  /* border: 1px solid #ccc;
+  border-color: #181b1e; */
 }
+
 
 .message.bot {
-align-self: flex-start;
-background-color: #ddaeae;
+  align-self: flex-start;
+  background-color: rgb(229, 233, 236);
+  padding: 20px; /* 메시지 박스 내부의 패딩을 설정합니다 */
+  margin: 30px;
+  position: relative; /* 상대적 위치 지정을 허용합니다 */
 }
 
+.message.bot::before {
+  content: ""; /* 가상 요소를 생성합니다 */
+  position: absolute; /* 절대적 위치 지정을 허용합니다 */
+  top: 10px; /* 위에서 10px 떨어진 위치에 배치합니다 */
+  left: -50px; /* 왼쪽에서 60px 떨어진 위치에 배치합니다 */
+  width: 50px; /* 이미지의 너비를 설정합니다 */
+  height: 50px; /* 이미지의 높이를 설정합니다 */
+  background-image: url('/static/image/mascot.png'); /* 이미지 URL을 적절히 입력하세요 */
+  background-size: cover; /* 이미지를 크기에 맞게 조절합니다 */
+  z-index: 1; /* 이미지를 텍스트 위에 표시합니다 */
+}
+
+.message.bot .message-text {
+  margin-left: 60px; /* 텍스트와 이미지 간의 간격을 설정합니다 */
+}
+
+/* .message.bot {
+  align-self: flex-start;
+  background-color: rgb(229, 233, 236);
+  /* border: 1px solid #ccc;
+  border-color: rgb(230, 71, 9); */
+/* } */ 
+
 .input-container {
-display: flex;
-padding: 10px;
-border-top: 1px solid #ccc;
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
 }
 
 input {
-flex: 1;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 20px;
-border-width: 2px;
+  flex: 1;
+  padding: 15px;
+  padding-left: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  border-width: 2px;
 }
 
 input[type="text"]:focus {
-    border-color: #428dde; /* 포커스를 받을 때의 테두리 색을 파란색(#007bff)으로 설정 */
-    outline: none;
-    border-width: 4px;
-    border-radius: 20px;
+  border-color:#89b3a6;
+  /* border-color: #9F769D; */
+  outline: none;
+  border-radius: 20px;
 }
 
 button {
-margin-left: 10px;
-padding: 10px 20px;
-border: none;
-background-color: #ffffff;
-color: white;
-border-radius: 5px;
-cursor: pointer;
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #ffffff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 #sendButton {
-    background-color: #ccc; /* 기본 버튼 색상 */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-size: contain; /* 이미지 크기 조정 */
-    background-repeat: no-repeat; /* 이미지 반복 방지 */
-    background-position: center; /* 이미지 위치 가운데 정렬 */
+  background-color: #ccc; /* 기본 버튼 색상 */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-size: contain; /* 이미지 크기 조정 */
+  background-repeat: no-repeat; /* 이미지 반복 방지 */
+  background-position: center; /* 이미지 위치 가운데 정렬 */
 }
 
-#sendButton:hover, #sendButton:focus, #input:focus + #sendButton {
-    background-color: rgba(255, 255, 255, 1); /* 입력 창에 입력이 있거나 버튼에 마우스를 올렸을 때의 배경 색상과 투명도 조절 */
+#sendButton:hover,
+#sendButton:focus,
+#input:focus + #sendButton {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    1
+  ); /* 입력 창에 입력이 있거나 버튼에 마우스를 올렸을 때의 배경 색상과 투명도 조절 */
 }

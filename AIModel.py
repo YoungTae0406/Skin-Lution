@@ -22,9 +22,9 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain.agents.agent_types import AgentType
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains.combine_documents import create_stuff_documents_chain
+from dotenv import load_dotenv
 
-os.environ["OPENAI_API_KEY"] = "sk-proj-CUdeVPUz9ydF7lmcoMdtT3BlbkFJTg1jD1GS4w2QUKBalNUT"
-os.environ["LANGCHAIN_API_KEY"] = "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"
+load_dotenv()
 
 openai_api_key = os.environ.get("OPENAI_API_KEY")
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
@@ -200,8 +200,8 @@ def create_model():
 
 app = FastAPI()
 origins = [
-    "http://localhost:8000",  # AI Chat 애플리케이션이 실행되는 출처
-    "http://localhost:8888"  # 웹페이지가 실행되는 출처 (예시)
+    "http://localhost:8000",  # AI Chat API가 실행되는 출처
+    "http://localhost:8888"  # 웹페이지가 실행되는 출처
 ]
 
 app.add_middleware(
@@ -215,7 +215,6 @@ app.add_middleware(
 chat_model = create_model()
 
 class ChatRequest(BaseModel):
-    #user_id: int # 고민해봐야됨.
     user_input: str
 
 class ChatResponse(BaseModel):
@@ -229,8 +228,6 @@ def generate_response(request: ChatRequest):
         return ChatResponse(response=result["response"], document_title=result["document_title"])
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
 
 # main 함수
 if __name__ == "__main__":
