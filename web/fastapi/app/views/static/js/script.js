@@ -16,20 +16,20 @@ async function handleSend() {
     
     // ChatGPT API 호출
     try {
-      const response = await fetch('http://127.0.0.1:8888/', {
+      const response = await fetch('http://127.0.0.1:8000/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ code: messageText })
+        body: JSON.stringify({ user_input: messageText })
       });
       
       const result = await response.json();
       
       if (response.ok) {
-        addMessage(result.output, 'bot');
+        addMessage(result.bot_response, 'bot');
       } else {
-        addMessage(`Error: ${result.error}\nOutput: ${result.output}`, 'bot');
+        addMessage(`Error: ${result.detail}`, 'bot');
       }
     } catch (error) {
       addMessage(`Error: ${error}`, 'bot');
@@ -52,15 +52,10 @@ function changeSendIcon() {
     var sendIcon = document.getElementById('sendIcon');
 
     if (input.value.trim() === "") {
-        sendIcon.src = "./gray_send_icon.png"; // 입력이 없을 때 회색 이미지로 변경
+        sendIcon.src = "./image/gray_send_icon.png"; // 입력이 없을 때 회색 이미지로 변경
     } else {
-        sendIcon.src = "./black_send_icon.png"; // 입력이 있을 때 파란색 이미지로 변경
+        sendIcon.src = "./image/black_send_icon.png"; // 입력이 있을 때 파란색 이미지로 변경
     }
 }
 
 document.getElementById('input').addEventListener('input', changeSendIcon);
-
-script.js
-script.js
-script.js
-script.js

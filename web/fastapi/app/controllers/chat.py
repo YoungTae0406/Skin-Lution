@@ -5,6 +5,7 @@ from schemas.chat_schemas import ChatResponse, ChatRequest
 
 router = APIRouter()
 
+'''
 @router.post("/", response_model=ChatResponse)
 async def chat_with_bot(request: ChatRequest):
     try:
@@ -14,3 +15,4 @@ async def chat_with_bot(request: ChatRequest):
         return ChatResponse(bot_response=bot_response)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+'''

@@ -1,7 +1,7 @@
 # 비즈니스 로직 처리
 import sqlite3
 from hashlib import sha256
-from .models import connectDB
+from models import connectDB
 
 
 def hashPassword(password: str) -> str:
