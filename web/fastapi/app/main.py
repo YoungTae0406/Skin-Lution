@@ -4,7 +4,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
-#from views import chat_view
+from datetime import timedelta
+
+from models import initDB
+from controllers import auth_router
+
+initDB()
 
 app = FastAPI()
 
@@ -27,9 +32,8 @@ app.mount("/static", StaticFiles(directory="/app/views/static"), name="static")
 # 템플릿 설정
 templates = Jinja2Templates(directory="/app/views/templates")
 
-# fastapi에 router를 포함시킨다. 
-# chat_view에서 정의된 라우터를 메인 애플리케이션에 포함.
 #app.include_router(chat_view.router)
+app.include_router(auth_router)
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):

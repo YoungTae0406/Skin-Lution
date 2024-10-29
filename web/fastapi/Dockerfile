@@ -1,6 +1,7 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
 
-#COPY requirements.txt /tmp/requirements.txt
-#RUN pip install --no-cache-dir -r /tmp/requirements.txt
+RUN pip install --upgrade pip 
+RUN apt-get update && apt-get install -y sqlite3 
+RUN pip install passlib[bcrypt] python-jose sqlalchemy alembic
 
 COPY ./app /app

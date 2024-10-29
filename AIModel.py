@@ -8,12 +8,12 @@ import getpass
 import os
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 import bs4
-from langchain.vectorstores import Chroma, FAISS
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma, FAISS
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 from langchain.chains import RetrievalQA
-from langchain.document_loaders import TextLoader, DirectoryLoader, PyPDFLoader
+from langchain_community.document_loaders import TextLoader, DirectoryLoader, PyPDFLoader
 from langchain_community.document_loaders import CSVLoader
 from langchain_core.prompts import PromptTemplate
 from langchain import hub
@@ -30,6 +30,7 @@ openai_api_key = os.environ.get("OPENAI_API_KEY")
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 langchain_api_key = os.environ.get("LANGCHAIN_API_KEY")
 
+
 llm = ChatOpenAI(
     temperature=0,  # 창의성 (0.0 ~ 2.0) 낮을수록 같은 질문에 같은 대답
     max_tokens=3000,  # 최대 토큰수
@@ -38,19 +39,19 @@ llm = ChatOpenAI(
     #callbacks=[StreamingStdOutCallbackHandler()], #스트리밍으로 답변 받기
 )
 
-loader = DirectoryLoader("../data", glob="**/*.pdf")
+loader = DirectoryLoader("./data", glob="**/*.pdf")
 pdf_docs = loader.load()
 
 for i in range(len(pdf_docs)):
     print(pdf_docs[i].metadata)
 
-loader = DirectoryLoader("../data", glob="**/*.txt")
+loader = DirectoryLoader("./data", glob="**/*.txt")
 txt_docs = loader.load()
 
 for i in range(len(txt_docs)):
     print(txt_docs[i].metadata)
 
-loader = CSVLoader(file_path='../data/cosmetics/화장품데이터.csv', encoding='utf-8')
+loader = CSVLoader(file_path='./data/cosmetics/화장품데이터.csv', encoding='utf-8')
 csv_docs = loader.load()
 
 pdf_splitter = RecursiveCharacterTextSplitter(

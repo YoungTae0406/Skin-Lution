@@ -4,7 +4,6 @@ from models.gptmodel import chat_gpt_model
 from schemas.chat_schemas import ChatResponse, ChatRequest
 
 router = APIRouter()
-
 '''
 @router.post("/", response_model=ChatResponse)
 async def chat_with_bot(request: ChatRequest):
