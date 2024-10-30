@@ -63,3 +63,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+document.getElementById('uploadButton').addEventListener('click', function() {
+  document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const preview = document.getElementById('preview');
+      preview.src = e.target.result; // 선택한 이미지의 데이터 URL을 미리보기 이미지에 설정
+      preview.style.display = 'block'; // 미리보기 이미지를 표시
+    };
+    reader.readAsDataURL(file); // 파일을 읽어 데이터 URL로 변환
+  }
+});

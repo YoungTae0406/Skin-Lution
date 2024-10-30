@@ -1,0 +1,71 @@
+body {
+    font-family: "Do Hyeon", Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .login-container {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 90vw;
+    max-width: 400px; /* 최대 너비 설정 */
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 95%; /* 전체 너비 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    width: 100%; /* 전체 너비 */
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: large; /* 버튼 텍스트 크기 */
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .links {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .signup-link {
+    text-decoration: none; /* 밑줄 제거 */
+    color: #007bff; /* 링크 색상 */
+  }
+  
+  .signup-link:hover {
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+  }
+  

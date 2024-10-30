@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="/static/css/styles.css" />
   </head>
   <body>
+    <div class="header-container">
+      <a href="signup.html" class="signup-link">회원가입</a>
+      <a href="login.html" class="login-link">로그인</a>
+    </div>
     <div class="chat-container">
       <header>
         <img src="/static/image/logo.png" alt="Logo" class="logo" />
@@ -20,6 +24,19 @@
       </header>
       <div class="messages" id="messages"></div>
       <div class="input-container">
+        <button
+          id="uploadButton"
+          style="padding: 0; border: none; background: none"
+        >
+          <img
+            id = "uploadIcon"
+            src="/static/image/paper_clip.png"
+            alt="Upload"
+            style="width: 26px; height: 26px"
+          />
+        </button>
+        <input type="file" id="fileInput" style="display: none;" accept="image/*" />
+
         <input
           type="text"
           id="input"

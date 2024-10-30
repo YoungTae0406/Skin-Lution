@@ -1,19 +1,45 @@
 /* styles.css */
 body {
-  font-family: sans-serif;
-  background-color: #f0f2f5;
-  display: flex;
+  font-family: "Do Hyeon", Arial, sans-serif;
+  background-color: hsl(216, 20%, 95%);
+  /* display: flex; */
+  display: grid;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 15px;
+  align-items: center;  
+  height: 90vh;
   margin: 0;
 }
 
-.chat-container {
+.header-container {
   display: flex;
-  flex-direction: column;
-  height: 90vh;
+  font-size: large;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  padding: 20px 20px;
+  background-color: #f0f2f5; /* 배경 색상 */  
+  width: 100%; /* 전체 너비 */
+
+}
+
+.signup-link,
+.login-link {
+  margin-left: 20px; /* 링크 사이의 간격 */
+  text-decoration: none; /* 밑줄 제거 */
+  color: black; /* 텍스트 색상 */
+  font-weight: bold; /* 굵게 */
+}
+
+.signup-link:hover,
+.login-link:hover {
+  color: #007bff; /* 호버 색상 */
+}
+
+
+
+.chat-container {
+  display: flex;  
+  flex-direction: column;    
+  justify-content: center;
+  height: 80vh;
   width: 90vw;
   max-width: 600px;
   background-color: #ffffff;
@@ -85,7 +111,7 @@ h1 {
   left: -50px; /* 왼쪽에서 60px 떨어진 위치에 배치합니다 */
   width: 50px; /* 이미지의 너비를 설정합니다 */
   height: 50px; /* 이미지의 높이를 설정합니다 */
-  background-image: url('/static/image/mascot.png'); /* 이미지 URL을 적절히 입력하세요 */
+  background-image: url('mascot.png'); /* 이미지 URL을 적절히 입력하세요 */
   background-size: cover; /* 이미지를 크기에 맞게 조절합니다 */
   z-index: 1; /* 이미지를 텍스트 위에 표시합니다 */
 }
@@ -103,14 +129,25 @@ h1 {
 
 .input-container {
   display: flex;
+  align-items: center;
   padding: 10px;
+  padding-left: 0px;
   border-top: 1px solid #ccc;
+  /* gap: 10px; */
+}
+
+#uploadIcon{
+  padding: 5px;
+}
+
+#uploadIcon:hover {
+  background-color: #ececec; /* 버튼에 배경색 추가 */
+  border-radius: 20%; /* 둥근 모양을 유지하려면 추가 */
 }
 
 input {
   flex: 1;
-  padding: 15px;
-  padding-left: 20px;
+  padding: 15px 20px;
   border: 1px solid #ccc;
   border-radius: 20px;
   border-width: 2px;
