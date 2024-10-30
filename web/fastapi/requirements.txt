@@ -8,3 +8,4 @@ faiss-cpu==1.8.0
 beautifulsoup4==4.11.1
 unstructured==0.14.2
 requests
+sentence-transformers
