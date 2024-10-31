@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Date
 from .database import Base
 from datetime import datetime
 
@@ -12,3 +12,8 @@ class User(Base):
     createdAt = Column(DateTime, default=datetime.utcnow, nullable=False)
     lastLogin = Column(DateTime, nullable=True)
     skinType = Column(String, nullable=True)
+
+    fullName = Column(String, nullable=False)
+    gender = Column(String, nullable=False)
+    birthdate = Column(Date, nullable=False)
+    phone = Column(String, nullable=False)

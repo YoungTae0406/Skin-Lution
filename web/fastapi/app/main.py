@@ -9,8 +9,6 @@ from datetime import timedelta
 from models import initDB
 from controllers import auth_router
 
-initDB()
-
 app = FastAPI()
 
 origins = [
@@ -35,6 +33,17 @@ templates = Jinja2Templates(directory="/app/views/templates")
 #app.include_router(chat_view.router)
 app.include_router(auth_router)
 
+# 채팅 페이지 라우트
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("chat.html", {"request": request})
+
+# 로그인 페이지 라우트
+@app.get("/login", response_class=HTMLResponse)
+async def get_login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+# 회원가입 페이지 라우트
+@app.get("/signup", response_class=HTMLResponse)
+async def get_signup(request: Request):
+    return templates.TemplateResponse("signup.html", {"request": request})

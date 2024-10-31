@@ -24,7 +24,7 @@ services:
       - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
       - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2}
     volumes:
-      - ../data:/data
+      - ../db_data:/app/data
     ports:
       - "8888:8888"
     networks:

@@ -2,3 +2,4 @@ data/
 .env
 webInfra/.env
 skinlution/
+db_data/
