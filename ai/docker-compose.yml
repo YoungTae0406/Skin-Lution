@@ -8,9 +8,6 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=8000
-      #- OPENAI_API_KEY=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
-      #- LANGCHAIN_API_KEY=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
-      #- LANGCHAIN_TRACING_V2=true
     volumes:
     - ./app:/app/
     - ../data:/app/data
