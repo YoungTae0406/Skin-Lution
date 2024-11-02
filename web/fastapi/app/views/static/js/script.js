@@ -14,24 +14,30 @@ async function handleSend() {
 
     // ChatGPT API 호출
     try {
-      const response = await fetch("http://127.0.0.1:8000/chat", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user_input: messageText }),
+        body: JSON.stringify({ user_message: messageText }),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        addMessage(result.bot_response, "bot");
+        // 하나의 메시지로 결합하여 출력
+        const fullMessage = `
+          ${result.ai_message}
+
+          문서 제목: ${result.document_title}
+          문서 메타데이터: ${result.document_metadata}
+        `;
+        addMessage(fullMessage, "bot");
       } else {
-        addMessage(`Error: ${result.error}\nOutput: ${result.output}`, "bot");
+        addMessage(`Error: ${result.error}\nOutput: ${result.detail}`, "bot");
       }
     } catch (error) {
-      addMessage(`error!
-      `, "bot");
+      addMessage("error!", "bot");
     }
   }
 }

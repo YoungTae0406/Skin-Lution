@@ -6,6 +6,8 @@ openai==1.28.1
 chromadb==0.4.24
 faiss-cpu==1.8.0
 beautifulsoup4==4.11.1
-unstructured==0.14.2
 requests
 sentence-transformers
+
+nltk==3.8.1
+unstructured==0.8.0

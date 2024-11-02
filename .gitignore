@@ -3,3 +3,5 @@ data/
 webInfra/.env
 skinlution/
 db_data/
+ai/app/data
+ai/.env

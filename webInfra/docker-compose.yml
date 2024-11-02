@@ -2,14 +2,15 @@
 version: '3'
 
 services:
-  # nginx-1:
-  #   image: nginx
-  #   ports: 
-  #     - 80:${NGINX_PORT} # 80:8080
-  #   volumes:
-  #     - ./nginx.conf:/etc/nginx/nginx.conf
-  #   networks:
-  #     - web_bridge
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "8888:80"  # Nginx가 80 포트를 8888로 노출
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Nginx 설정 파일 마운트
+    networks:
+      - web_network
 
   fastapi-1:
     container_name: fastapi-1
@@ -20,17 +21,13 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=8888
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
-      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2}
     volumes:
       - ../db_data:/app/data
-    ports:
-      - "8888:8888"
     networks:
-      - web_bridge
+      - web_network
 
 networks:
-  web_bridge:
+  web_network:
+    external: true
     
   

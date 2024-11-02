@@ -8,12 +8,12 @@ import getpass
 import os
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 import bs4
-from langchain.vectorstores import Chroma, FAISS
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma, FAISS
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 from langchain.chains import RetrievalQA
-from langchain.document_loaders import TextLoader, DirectoryLoader, PyPDFLoader
+from langchain_community.document_loaders import TextLoader, DirectoryLoader, PyPDFLoader
 from langchain_community.document_loaders import CSVLoader
 from langchain_core.prompts import PromptTemplate
 from langchain import hub
@@ -22,7 +22,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains.combine_documents import create_stuff_documents_chain
 import os
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 import nltk
 
 def set_api_keys():
@@ -33,9 +33,7 @@ def set_api_keys():
 # API 키 설정 호출
 set_api_keys()
 
-# In[6]:
-
-
+# pdf, csv 같은 파일 읽어오는 부분
 def load_documents(data_path: str):
     documents = {}
     
@@ -56,15 +54,10 @@ def print_documents(documents):
         
 data_path = "./data"
 docs = load_documents(data_path)
-
-# In[8]:
-
 print_documents(docs['pdf_docs'])
 
 
-# In[9]:
-
-
+# 가져온 파일들을 split 
 def split_documents(documents, chunk_size=500, chunk_overlap=100, add_start_index=True):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
@@ -79,36 +72,56 @@ print(f"PDF 문서 분할 후 총 청크 수: {len(pdf_splits)}")
 txt_splits = split_documents(docs['txt_docs'], chunk_size=300, chunk_overlap=50)
 print(f"TXT 문서 분할 후 총 청크 수: {len(txt_splits)}")
 
-
-# In[10]:
-
+# 벡터스토어 파일 있으면 로드(추가)
+def load_or_create_vectorstore(documents, file_path):
+    if os.path.exists(file_path):
+        # 파일이 존재하면 로드
+        return FAISS.load_local(file_path, OpenAIEmbeddings())
+    else:
+        # 파일이 없으면 생성하고 저장
+        vectorstore = create_vectorstore(documents)
+        vectorstore.save_local(file_path)
+        return vectorstore
 
 def create_vectorstore(documents, embedding_model=None):
     embedding_model = embedding_model or OpenAIEmbeddings()
     vectorstore = FAISS.from_documents(documents=documents, embedding=embedding_model)
     return vectorstore
 
+
 def merge_vectorstores(primary_store, secondary_store):
     primary_store.merge_from(secondary_store)
 
-pdf_vectorstore = create_vectorstore(pdf_splits)
-txt_vectorstore = create_vectorstore(txt_splits)
-cosmetic_vectorstore = create_vectorstore(docs['csv_docs'])
-
-# PDF와 TXT 벡터 스토어 병합
+pdf_vectorstore = load_or_create_vectorstore(pdf_splits, "./vectorstore/pdf_vectorstore")
+txt_vectorstore = load_or_create_vectorstore(txt_splits, "./vectorstore/txt_vectorstore")
+cosmetic_vectorstore = load_or_create_vectorstore(docs['csv_docs'], "./vectorstore/cosmetic_vectorstore")
 merge_vectorstores(pdf_vectorstore, txt_vectorstore)
 
 
-# In[15]:
+# In[10]:
+# # 벡터스토어 임베딩 
+# def create_vectorstore(documents, embedding_model=None):
+#     embedding_model = embedding_model or OpenAIEmbeddings()
+#     vectorstore = FAISS.from_documents(documents=documents, embedding=embedding_model)
+#     return vectorstore
 
+# def merge_vectorstores(primary_store, secondary_store):
+#     primary_store.merge_from(secondary_store)
+
+# pdf_vectorstore = create_vectorstore(pdf_splits)
+# txt_vectorstore = create_vectorstore(txt_splits)
+# cosmetic_vectorstore = create_vectorstore(docs['csv_docs'])
+
+# # PDF와 TXT 벡터 스토어 병합
+# merge_vectorstores(pdf_vectorstore, txt_vectorstore)
+
+# In[15]:
 
 # k is the number of chunks to retrieve
 retriever1 = pdf_vectorstore.as_retriever(k=3)
 retriever2 = cosmetic_vectorstore.as_retriever(k=50)
 
-
 # In[16]:
-
 
 # 선택된 벡터스토어에 따라 검색 수행하는 함수
 def is_cosmetic_query(user_message):
@@ -177,7 +190,6 @@ def perform_retrieval(user_message):
 import re
 
 def main():
-    nltk.download('punkt_tab')
     demo_ephemeral_chat_history = ChatMessageHistory()
     printed_messages = []
     
@@ -234,9 +246,6 @@ if __name__ == "__main__":
     main()
 
 
-# In[78]:
-
-
 from sentence_transformers import SentenceTransformer, util
 from PIL import Image
 import torch
@@ -270,9 +279,6 @@ def analyze_skin_image(image_path):
     best_similarity_score = similarities[max_similarity_index]
     
     return best_matching_description, best_similarity_score
-
-
-# In[79]:
 
 
 image_path = "평범피부.jpg"  # 사용자가 업로드한 이미지 파일 경로

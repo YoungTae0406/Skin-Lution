@@ -21,16 +21,54 @@ body {
 }
 
 .signup-link,
-.login-link {
-  margin-left: 20px; /* 링크 사이의 간격 */
-  text-decoration: none; /* 밑줄 제거 */
-  color: black; /* 텍스트 색상 */
-  font-weight: bold; /* 굵게 */
+.login-link,
+.logout-link {
+  margin-left: 20px; 
+  text-decoration: none; 
+  color: black; 
+  font-weight: bold;
+}
+
+.profile-icon {
+  width: 40px; /* 원하는 너비 */
+  height: 40px; /* 원하는 높이 */
+  border-radius: 50%; /* 동그란 아이콘 모양 */
+  overflow: hidden; /* 이미지가 아이콘 크기에 맞춰 잘리도록 설정 */
+}
+
+.profile-menu {
+  display: flex;
+  align-items: center;
+  position: relative; /* dropdown-menu 위치 기준 */
+}
+
+.dropdown-menu {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute;
+  top: 100%; /* 프로필 아이콘 바로 아래에 위치 */
+  right: 0; 
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 10px;
+  width: 150px; 
+  z-index: 10;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0f2f5;
 }
 
 .signup-link:hover,
 .login-link:hover {
-  color: #007bff; /* 호버 색상 */
+  color: #007bff; 
 }
 
 
