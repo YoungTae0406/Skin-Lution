@@ -14,10 +14,45 @@ body {
   display: flex;
   font-size: large;
   justify-content: flex-end; /* 오른쪽 정렬 */
-  padding: 20px 20px;
+  padding: 20px 0px 7px 0px;
   background-color: #f0f2f5; /* 배경 색상 */  
   width: 100%; /* 전체 너비 */
+}
 
+.hamburger {
+  margin-right: auto;
+}
+
+.hamburgerMenu {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.hamburgerMenu:hover {
+  background-color: #ececec !important; /* 마우스를 올렸을 때의 배경색 */
+}
+
+.hamburger-menu {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute; /* 드롭다운 형태로 표시 */
+  top: 67px; /* 햄버거 바 바로 아래에 위치하도록 설정 */
+  transform: translateX(-405%); /* 메뉴의 너비의 절반만큼 왼쪽으로 이동 */
+  background-color: #ffffff; /* 배경색 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 10;
+}
+
+
+.hamburger-menu a {
+  display: block;
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+}
+
+.hamburger-menu a:hover {
+  background-color: #f0f2f5;
 }
 
 .signup-link,
@@ -70,8 +105,6 @@ body {
 .login-link:hover {
   color: #007bff; 
 }
-
-
 
 .chat-container {
   display: flex;  
@@ -149,7 +182,7 @@ h1 {
   left: -50px; /* 왼쪽에서 60px 떨어진 위치에 배치합니다 */
   width: 50px; /* 이미지의 너비를 설정합니다 */
   height: 50px; /* 이미지의 높이를 설정합니다 */
-  background-image: url('mascot.png'); /* 이미지 URL을 적절히 입력하세요 */
+  background-image: url('/static/image/mascot.png'); /* 이미지 URL을 적절히 입력하세요 */
   background-size: cover; /* 이미지를 크기에 맞게 조절합니다 */
   z-index: 1; /* 이미지를 텍스트 위에 표시합니다 */
 }
@@ -200,16 +233,14 @@ input[type="text"]:focus {
 
 button {
   margin-left: 10px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #ffffff;
+  border: none;  
   color: white;
   border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #c4dad3;
 }
 
 #sendButton {

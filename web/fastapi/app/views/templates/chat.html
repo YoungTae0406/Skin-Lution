@@ -14,15 +14,37 @@
   </head>
   <body>
     <div class="header-container">
+      <button id="hamburgerMenu" class="hamburger">
+        <img src="/static/image/hamburger_icon.png" alt="Menu" style="width: 25px; height: 25px;">
+      </button>
+      
+      <div class="hamburger-menu" style="display: none;">
+        <a href="#" id="skinTypeTest">피부타입테스트</a>
+        <a href="#" id="chatHistory">채팅 히스토리</a>
+      </div>
+
       <a href="/signup" class="signup-link">회원가입</a>
       <a href="/login" class="login-link">로그인</a>
+      
+      <!--
+      <div class="profile-menu" style="display: none;">
+        <img src="profile_icon.png" alt="Profile Icon" class="profile-icon" />
+        <div class="dropdown-menu">
+          <a href="settings.html">설정</a>
+          <a href="#" id="logout">로그아웃</a>
+        </div>
+      </div>
+    -->
     </div>
+
     <div class="chat-container">
       <header>
         <img src="/static/image/logo.png" alt="Logo" class="logo" />
         <!-- <h1>피부 상담</h1> -->
       </header>
+
       <div class="messages" id="messages"></div>
+
       <div class="input-container">
         <button
           id="uploadButton"

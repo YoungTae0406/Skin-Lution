@@ -1,6 +1,6 @@
 # main.py
 
-from fastapi import FastAPI, Form, HTTPException
+from fastapi import FastAPI, Form, HTTPException, File, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -18,6 +18,10 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain.chains.combine_documents import create_stuff_documents_chain
 import nltk
 import re
+from sentence_transformers import SentenceTransformer, util
+from PIL import Image
+import torch
+import io
 
 app = FastAPI()
 
@@ -125,49 +129,6 @@ def select_vectorstore(user_message):
     else:
         return retriever1
 
-# def perform_retrieval(user_message):
-#     selected_retriever = select_retriever(user_message)
-#     # 질의 변환 및 검색 수행
-#     query_transform_prompt = ChatPromptTemplate.from_messages(
-#         [
-#             MessagesPlaceholder(variable_name="messages"),
-#             (
-#                 "user",
-#                 "Given the above conversation, generate a search query to look up in order to get information relevant to the conversation. Only respond with the query, nothing else.",
-#             ),
-#         ]
-#     )
-
-#     question_answering_prompt = ChatPromptTemplate.from_messages(
-#         [
-#             (
-#                 "system",
-#                 "Answer the user's question based on the below context:\n\n{context}",
-#             ),
-#             MessagesPlaceholder(variable_name="messages"),
-#         ]
-#     )
-
-#     query_transforming_retriever_chain = RunnableBranch(
-#         (
-#             lambda x: len(x.get("messages", [])) == 1,
-#             (lambda x: x["messages"][-1].content) | selected_retriever,
-#         ),
-#         query_transform_prompt 
-#         | llm 
-#         | StrOutputParser() 
-#         | selected_retriever,
-#     ).with_config(run_name="chat_retriever_chain")
-
-#     document_chain = create_stuff_documents_chain(llm, question_answering_prompt)
-
-#     conversational_retrieval_chain = RunnablePassthrough.assign(
-#         context=query_transforming_retriever_chain,
-#     ).assign(
-#         answer=document_chain,
-#     )
-#     return conversational_retrieval_chain
-
 def perform_retrieval(user_message, messages):
     selected_vectorstore = select_vectorstore(user_message)
     
@@ -240,37 +201,6 @@ def display_document_metadata(metadata):
             metadata_text += f"답변에 활용한 정보: {value}\n"
     return metadata_text.strip() if metadata_text else None
 
-'''
-@app.post("/chat")
-async def chat_api(user_message: str = Form(...)):
-    try:
-        # Initialize chat history for the session
-        chat_history = ChatMessageHistory()
-        chat_history.add_user_message(user_message)
-        
-        # Perform retrieval and get the response
-        response = perform_retrieval(user_message, chat_history.messages)
-
-        # Extract the AI response and update chat history
-        chat_history.add_ai_message(response["answer"])
-
-        # Extract document title and metadata if available
-        first_document_title, first_document_metadata = extract_document_info(response)
-
-        # Format metadata for response
-        metadata_text = display_document_metadata(first_document_metadata) if first_document_metadata else None
-
-        # Return response as JSON
-        return JSONResponse({
-            "ai_message": response["answer"],
-            "document_title": first_document_title,
-            "document_metadata": metadata_text
-        })
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-'''
-
 @app.post("/chat")
 async def chat_api(request: ChatRequest):
     user_message = request.user_message
@@ -301,3 +231,53 @@ async def chat_api(request: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# CLIP 모델 불러오기
+clip_model = SentenceTransformer('clip-ViT-B-32')
+
+# 피부 상태 설명 리스트 (필요에 따라 확장 가능)
+skin_descriptions = [
+    "건조한 피부",
+    "유분기가 있는 피부",
+    "평범한 피부",
+]
+
+# 각 피부 설명에 대한 텍스트 임베딩 생성
+skin_description_embeddings = [clip_model.encode(desc, convert_to_tensor=True) for desc in skin_descriptions]
+
+def analyze_skin_image(image_data: bytes):
+    # 이미지 열기 및 CLIP 임베딩 생성
+    image = Image.open(io.BytesIO(image_data)).convert("RGB")
+    image_embedding = clip_model.encode(image, convert_to_tensor=True)
+    
+    # 유사도 계산
+    similarities = [util.pytorch_cos_sim(image_embedding, desc_embedding).item()
+                    for desc_embedding in skin_description_embeddings]
+    
+    # 가장 높은 유사도 점수를 가진 피부 상태 설명 선택
+    max_similarity_index = similarities.index(max(similarities))
+    best_matching_description = skin_descriptions[max_similarity_index]
+    
+    return best_matching_description
+
+@app.post("/analyze-skin")
+async def analyze_skin(file: UploadFile = File(...)):
+    try:
+        # 이미지 파일 읽기
+        image_data = await file.read()
+        
+        # 피부 분석
+        description = analyze_skin_image(image_data)
+        if description == "건조한 피부":
+            description = "건성피부 입니다."
+        else if description == "유분기가 있는 피부":
+            description = "지성피부 입니다."
+        else :
+            description = "중성피부 입니다."
+
+        # 결과 반환
+        return JSONResponse({
+            "best_matching_description": description,            
+        })
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
