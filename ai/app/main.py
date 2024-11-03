@@ -268,11 +268,11 @@ async def analyze_skin(file: UploadFile = File(...)):
         # 피부 분석
         description = analyze_skin_image(image_data)
         if description == "건조한 피부":
-            description = "건성피부 입니다."
-        else if description == "유분기가 있는 피부":
-            description = "지성피부 입니다."
+            description = "사용자님의 피부타입은 건성피부 입니다."
+        elif description == "유분기가 있는 피부":
+            description = "사용자님의 피부타입은 지성피부 입니다."
         else :
-            description = "중성피부 입니다."
+            description = "사용자님의 피부타입은 중성피부 입니다."
 
         # 결과 반환
         return JSONResponse({

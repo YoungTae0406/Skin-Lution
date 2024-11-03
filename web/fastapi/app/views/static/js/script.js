@@ -127,6 +127,44 @@ document.getElementById('uploadButton').addEventListener('click', function() {
 //   }
 // });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const loginLink = document.querySelector(".login-link");
+  const signupLink = document.querySelector(".signup-link");
+  const profileMenu = document.querySelector(".profile-menu");
+
+  // 로그인 후 UI 변경
+  function showProfile() {
+    loginLink.style.display = "none";
+    signupLink.style.display = "none";
+    profileMenu.style.display = "flex";
+  }
+
+  // 로그인 상태 확인 및 UI 업데이트
+  if (sessionStorage.getItem("isLoggedIn") === "true") {
+    showProfile();
+  }
+
+  // 로그아웃 버튼 클릭 시
+  document.getElementById("logout").addEventListener("click", () => {
+    sessionStorage.removeItem("isLoggedIn");
+    loginLink.style.display = "inline";
+    signupLink.style.display = "inline";
+    profileMenu.style.display = "none";
+    dropdownMenu.style.display = "none";
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const profileIcon = document.querySelector(".profile-icon");
+  const dropdownMenu = document.querySelector(".dropdown-menu");
+
+  // 프로필 아이콘 클릭 시 드롭다운 토글
+  profileIcon.addEventListener("click", () => {
+    dropdownMenu.style.display =
+      dropdownMenu.style.display === "none" ? "block" : "none";
+  });
+
+});
 
 // 햄버거 바 클릭 시 메뉴 토글
 document.getElementById("hamburgerMenu").addEventListener("click", function() {
@@ -141,3 +179,4 @@ document.getElementById("skinTypeTest").addEventListener("click", function() {
 
 // 파일이 선택되었을 때 handleSkinAnalysis 함수 실행
 document.getElementById("fileInput").addEventListener("change", handleSkinAnalysis);
+

@@ -12,6 +12,8 @@
     <title>로그인</title>
     <link rel="stylesheet" href="/static/css/login.css" />
 </head>
+
+
 <body>
     <div class="login-container">
         <h2>로그인</h2>
@@ -24,11 +26,40 @@
                 <label for="password">비밀번호:</label>
                 <input type="password" id="password" name="password" required />
             </div>
-            <button type="submit">로그인</button>
+            <!-- <button type="submit">로그인</button> -->
+            <button type="button" id="login-button" >로그인</button>
         </form>
         <div class="links">
             <a href="/signup" class="signup-link">회원가입</a>
         </div>
     </div>
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const loginLink = document.querySelector(".login-link");
+    const signupLink = document.querySelector(".signup-link");
+    const profileMenu = document.querySelector(".profile-menu");
+    const loginButton = document.getElementById("login-button");
+  
+    // 로그인 버튼 클릭 시 이벤트 핸들러 추가
+    if (loginButton) {
+      loginButton.addEventListener("click", (event) => {
+        console.log("로그인 버튼이 클릭되었습니다.");
+  
+        // 로그인 상태를 sessionStorage에 저장
+        sessionStorage.setItem("isLoggedIn", "true");
+  
+        // chat.html로 이동
+        window.location.href = '/';
+      });
+    }
+  
+    // 현재 페이지에서 로그인 상태 확인 및 UI 업데이트
+    // const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+    // if (isLoggedIn) showProfile();
+});
+
+</script>
+
 </html>

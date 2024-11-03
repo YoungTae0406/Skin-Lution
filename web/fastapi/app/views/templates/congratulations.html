@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/congratulations.css">
+    <title>축하합니다</title>
+</head>
+<body>
+    <div class="container">
+        <img src="/static/image/congratulations-image.png" alt="축하 이미지" class="celebration-image">
+        <h2 id="congratulationsMessage"></h2>
+        <p>AI 개인 맞춤형 피부고민 상담 서비스 SkinLution!</p>
+        <button onclick="location.href='/'" class="return-button">메인으로 돌아가기</button> <!-- 버튼 추가 -->
+    </div>
+    
+    <script>
+        const userName = localStorage.getItem('userName');
+        const messageElement = document.getElementById('congratulationsMessage');
+
+        if (userName) {
+            messageElement.textContent = `${userName}님, 회원가입을 축하드립니다!`;
+        } else {
+            messageElement.textContent = '회원가입에 실패했습니다.';
+        }
+    </script>
+</body>
+</html>

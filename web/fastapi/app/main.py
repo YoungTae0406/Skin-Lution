@@ -47,3 +47,7 @@ async def get_login(request: Request):
 @app.get("/signup", response_class=HTMLResponse)
 async def get_signup(request: Request):
     return templates.TemplateResponse("signup.html", {"request": request})
+
+@app.get("/congratulations", response_class=HTMLResponse)
+async def get_congratulations(request: Request):
+    return templates.TemplateResponse("congratulations.html", {"request": request})

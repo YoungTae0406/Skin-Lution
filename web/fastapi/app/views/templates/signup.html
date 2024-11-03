@@ -41,8 +41,21 @@
                 <label for="phone">휴대전화 번호:</label>
                 <input type="tel" id="phone" name="phone" required>
             </div>
-            <button type="submit">가입하기</button>
+
+            <button type="button" id="signupButton">가입하기</button>
         </form>
+
+        <script>
+            document.getElementById('signupButton').addEventListener('click', function() {
+                const fullname = document.getElementById('fullname').value;
+                if (fullname) {
+                    localStorage.setItem('userName', fullname); // 이름 저장
+                    window.location.href = '/congratulations'; // 축하 페이지로 이동
+                } else {
+                    alert('이름을 입력해 주세요.');
+                }
+            });
+        </script>
     </div>
 </body>
 </html>
